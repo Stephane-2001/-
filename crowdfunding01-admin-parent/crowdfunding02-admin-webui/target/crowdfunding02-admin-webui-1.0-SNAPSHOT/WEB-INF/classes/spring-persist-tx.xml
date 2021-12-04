@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--扫描spring-persist-mybatis.xml配置文件-->
+    <import resource="spring-persist-mybatis.xml"></import>
+
+    <!--配置自动扫描的包 主要是扫描service到ioc容器中-->
+    <context:component-scan base-package="com.leeyen.crowd.service"></context:component-scan>
+
+    <!--配置事务管理器-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 配置BCryptPasswordEncoder的bean -->
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!--配置事务切面-->
+    <aop:config>
+        <aop:pointcut id="txPointCut" expression="execution(* *..*serviceImpl.*(..))"/>
+        <!--将切入点表达式和事务关联-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"></aop:advisor>
+    </aop:config>
+    <!--配置事务的通知-->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!--配置事务的属性-->
+        <tx:attributes>
+            <!--查询方法 让数据库知道这是查询操作，能够进行一定的优化-->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+
+            <!--增删改查 配置事务传播行为和回滚异常
+            propagation 默认值为REQUIRED 表示该方法只能运行在事务中，若没有事务则开启新事务
+                        建议使用REQUIRES_NEW 该方法只能运行在事务中 自己开启新的事务并在这个事务中运行，不会收到其他事务回滚影响
+            rollback-for 配置事务方法针对什么样的异常回滚
+                        默认 运行时异常回滚 建议是编译和异常时都回滚 -->
+            <tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+</beans>

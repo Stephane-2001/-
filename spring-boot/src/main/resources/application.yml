@@ -1,0 +1,46 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /leeyen
+
+student:
+  stu-id: 5
+  stu-name: jerry
+  graduated: false
+  subject:
+    - java
+    - php
+    - python
+  birthday: 2001-4-25 15:30:20
+  teachers:
+    java: tom
+    php: yzx
+    python: lyx
+  address:
+    province: 四川
+    city: 成都
+    street: 成华大道
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.168.239.128:3306/spring-boot?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    name: mydb
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+mybatis:
+  mapper-locations: classpath*:/mybatis/mapper/*Mapper.xml
+
+logging:
+  level:
+    com.leeyen.springboot.mapper: debug
+    com.leeyen.springboot.test: debug
+
+
+

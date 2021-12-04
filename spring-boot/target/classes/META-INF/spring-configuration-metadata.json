@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "student",
+      "type": "com.leeyen.springboot.entity.Student",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    }
+  ],
+  "properties": [
+    {
+      "name": "student.address",
+      "type": "com.leeyen.springboot.entity.Address",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.birthday",
+      "type": "java.util.Date",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.graduated",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.stu-id",
+      "type": "java.lang.Integer",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.stu-name",
+      "type": "java.lang.String",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.subject",
+      "type": "java.lang.String[]",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    },
+    {
+      "name": "student.teachers",
+      "type": "java.util.Map<java.lang.String,java.lang.String>",
+      "sourceType": "com.leeyen.springboot.entity.Student"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,31 @@
+主启动类所在包为 com.leeyen.crowd
+其他的包都是com.leeyen.crowd的子包
+
+主启动类名为CrowdMainClass
+
+父工程,聚合工程      crowdfunding07-member-parent
+注册中心            crowdfunding08-member-eureka 			    1000
+实体类模块          crowdfunding09-member-entity
+mysql数据服务   crowdfunding10-member-mysql-provider 			2000
+redis数据服务   crowdfunding11-member-redis-provider 			3000
+会员中心            crowdfunding12-member-authentication-consumer         4000
+项目维护        crowdfunding13-member-project-consumer 		        5000
+订单维护        crowdfunding14-member-order-consumer 			    7000
+支付维护        crowdfunding15-member-pay-consumer 			        8000
+网关              crowdfunding16-member-zuul 					                80
+
+CREATE TABLE t_member (
+  id INT (11) NOT NULL AUTO_INCREMENT,
+  loginacct VARCHAR (255) NOT NULL,
+  userpswd CHAR(200) NOT NULL,
+  username VARCHAR (255),
+  email VARCHAR (255),
+  authstatus INT (4) COMMENT 	'实名认证状态 0 - 未实名认证， 1 - 实名认证申请中， 2 - 已实名认证',
+  usertype INT (4) COMMENT 		'0 - 个人， 1 - 企业',
+  realname VARCHAR (255),
+  cardnum VARCHAR (255),
+  accttype INT (4) COMMENT 		'0 - 企业， 1 - 个体， 2 - 个人， 3 - 政府',
+  PRIMARY KEY (id)
+) ;
+
+
